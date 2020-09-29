@@ -7,19 +7,6 @@ services:
     - POSTGRES_DB=dev
     - POSTGRES_USER=dev
     - POSTGRES_PASSWORD=dev
-  web:
-    build:
-      context: .
-      dockerfile: dockerized/dev/Dockerfile
-    command: ./start_dev.sh
-    environment:
-    - DJANGO_SETTINGS_MODULE=dev.settings
-    - PYTHONPATH=.
-    volumes:
-    - .:/opt/cornucopia
-    - ./dockerized/dev:/opt/dev
     ports:
-    - "8000:8000"
-    depends_on:
-    - db
+    - "5432:5432"
 

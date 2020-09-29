@@ -1,0 +1,5 @@
+dev/secrets/*
+!dev/secrets/.keep
+
+staticfiles/*
+!staticfiles/.keep
