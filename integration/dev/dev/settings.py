@@ -23,11 +23,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Secrets
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY_FILE = BASE_DIR / 'secrets/key.txt'
+SECRET_DIR = Path(__file__).resolve().parent
+
+SECRET_KEY_FILE = SECRET_DIR / 'key.txt'
 SECRET_KEY_FILE.exists() or SECRET_KEY_FILE.write_text(utils.get_random_secret_key())
 SECRET_KEY = SECRET_KEY_FILE.read_text()
 
-SECRET_SETTINGS_FILE = BASE_DIR / 'secrets/settings.py'
+SECRET_SETTINGS_FILE = SECRET_DIR / 'settings.py'
 SECRET_SETTINGS_FILE.exists() or SECRET_SETTINGS_FILE.touch()
 
 
@@ -92,7 +94,7 @@ DATABASES = {
         'NAME': 'dev',
         'USER': 'dev',
         'PASSWORD': 'dev',
-        'HOST': 'db',
+        'HOST': 'localhost',
         'PORT': 5432,
     }
 }
