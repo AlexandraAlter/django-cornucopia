@@ -7,4 +7,5 @@ COPY . /opt/cornucopia
 RUN pip install -e /opt/cornucopia
 RUN pip install -r requirements.txt
 COPY dockerized/dev/ /opt/dev/
+RUN git clone -v https://github.com/vishnubob/wait-for-it.git /opt/wait-for-it
 
