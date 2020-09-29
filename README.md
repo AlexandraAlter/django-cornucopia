@@ -1,2 +1,2 @@
 # django-cornucopia
-A Django application of the Cornucopia image hosting system
+A Django app containing the Cornucopia image hosting system
