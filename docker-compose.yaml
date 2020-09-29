@@ -7,13 +7,19 @@ services:
     - POSTGRES_DB=dev
     - POSTGRES_USER=dev
     - POSTGRES_PASSWORD=dev
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5432"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
   web:
-    build: dockerized/dev
-    command: >-
-      bash -c "
-      python -m pip install -e /opt/cornucopia &&
-      python manage.py runserver 0.0.0.0:8000
-      "
+    build:
+      context: .
+      dockerfile: dockerized/dev/Dockerfile
+    command: ./start_dev.sh
+    environment:
+    - DJANGO_SETTINGS_MODULE=dev.settings
+    - PYTHONPATH=.
     volumes:
     - .:/opt/cornucopia
     - ./dockerized/dev:/opt/dev
