@@ -7,11 +7,6 @@ services:
     - POSTGRES_DB=dev
     - POSTGRES_USER=dev
     - POSTGRES_PASSWORD=dev
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5432"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
   web:
     build:
       context: .
