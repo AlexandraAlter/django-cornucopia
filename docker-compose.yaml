@@ -1,0 +1,24 @@
+version: "3.8"
+   
+services:
+  db:
+    image: postgres
+    environment:
+    - POSTGRES_DB=dev
+    - POSTGRES_USER=dev
+    - POSTGRES_PASSWORD=dev
+  web:
+    build: dockerized/dev
+    command: >-
+      bash -c "
+      python -m pip install -e /opt/cornucopia &&
+      python manage.py runserver 0.0.0.0:8000
+      "
+    volumes:
+    - .:/opt/cornucopia
+    - ./dockerized/dev:/opt/dev
+    ports:
+    - "8000:8000"
+    depends_on:
+    - db
+
