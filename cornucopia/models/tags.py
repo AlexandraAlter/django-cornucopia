@@ -1,13 +1,31 @@
 from django.db import models
 
+from . import zones
+
 
 class TagCategory(models.Model):
     name = models.CharField(max_length=64)
+    zone = models.ForeignKey(zones.Zone, on_delete=models.PROTECT)
+
+    def __repr__(self):
+        return "TagCategory({!r})".format(self.name)
+
+    def __str__(self):
+        return "Tag Category {!s}".format(self.name)
+
+    class Meta:
+        verbose_name_plural = "tag categories"
 
 
 class Tag(models.Model):
     name = models.CharField(max_length=64)
     category = models.ForeignKey(TagCategory, on_delete=models.PROTECT)
+
+    def __repr__(self):
+        return "Tag({!r}, {!r})".format(self.name, self.category.name)
+
+    def __str__(self):
+        return "Tag {!s} in {!s}".format(self.name, self.category.name)
 
 
 class TagLink(models.Model):
@@ -40,3 +58,6 @@ class TagImplication(models.Model):
 class TagAlias(models.Model):
     name = models.CharField(max_length=64)
     tag = models.ForeignKey(Tag, on_delete=models.PROTECT)
+
+    class Meta:
+        verbose_name_plural = "tag aliases"

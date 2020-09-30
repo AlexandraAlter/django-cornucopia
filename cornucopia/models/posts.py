@@ -6,10 +6,6 @@ from django.db import models
 from . import tags
 
 
-class Approval(models.Model):
-    authorizer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
-
-
 class Post(models.Model):
     content_id = models.IntegerField()
     content_type = models.ForeignKey(ct_models.ContentType, on_delete=models.PROTECT)
@@ -17,21 +13,28 @@ class Post(models.Model):
 
     parent = models.ForeignKey('self', on_delete=models.SET_NULL, blank=True, null=True)
 
-    tags = models.ManyToManyField(tags.Tag,
-                                  through='PostTagLink',
-                                  through_fields=('post', 'tag'))
+    tags = models.ManyToManyField(tags.Tag, through='PostTagLink', through_fields=('post', 'tag'))
 
-    comment = models.TextField()
-    sources = pg_fields.ArrayField(base_field=models.CharField(max_length=256))
+    comment = models.TextField(blank=True)
+    sources = pg_fields.ArrayField(base_field=models.CharField(max_length=256), blank=True)
 
-    poster = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    poster = models.ForeignKey(settings.AUTH_USER_MODEL,
+                               on_delete=models.PROTECT,
+                               related_name='posts')
     posted_date = models.DateTimeField(auto_now=True)
 
-    approval = models.OneToOneField(Approval,
-                                    on_delete=models.PROTECT,
-                                    related_name='post',
-                                    blank=True,
-                                    null=True)
+    authorizer = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                   on_delete=models.PROTECT,
+                                   related_name='authorized_posts',
+                                   blank=True,
+                                   null=True)
+    authorized_date = models.DateTimeField(blank=True)
+
+    def __repr__(self):
+        return "Post({!r})".format(self.id)
+
+    def __str__(self):
+        return "Post {!s}".format(self.id)
 
 
 class PostTagLink(tags.TagLink):
@@ -64,7 +67,7 @@ class PostEdit(models.Model):
             raise ValidationError(_('Post edit cannot have an new_desc and be applied.'))
 
 
-class PostTagsProposedLink(PostTagLink):
+class PostTagProposedLink(PostTagLink):
     edit = models.ForeignKey(PostEdit, on_delete=models.CASCADE, related_name='new_tags')
 
 
@@ -77,3 +80,6 @@ class Gallery(models.Model):
     posts = models.ManyToManyField(Post)
 
     poster = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+
+    class Meta:
+        verbose_name_plural = "galleries"

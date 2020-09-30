@@ -9,3 +9,12 @@ class Zone(models.Model):
                               null=True)
 
     name = models.CharField(max_length=256)
+
+    def __repr__(self):
+        return "Zone({!r}, {!r})".format(self.name, self.owner or None)
+
+    def __str__(self):
+        if self.owner:
+            return "Zone {!s}.{!s}".format(self.owner.username, self.name)
+        else:
+            return "Zone {!s}".format(self.name)
