@@ -7,4 +7,3 @@ from . import boards
 class PostsView(boards.BoardView):
     def get(self):
         return "Posts!"
-

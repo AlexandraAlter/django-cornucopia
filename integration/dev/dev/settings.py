@@ -16,7 +16,6 @@ from django.core.management import utils
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -32,12 +31,10 @@ SECRET_KEY = SECRET_KEY_FILE.read_text()
 SECRET_SETTINGS_FILE = SECRET_DIR / 'settings.py'
 SECRET_SETTINGS_FILE.exists() or SECRET_SETTINGS_FILE.touch()
 
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -84,7 +81,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'dev.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
@@ -99,11 +95,9 @@ DATABASES = {
     }
 }
 
-
 # Users
 
 AUTH_USER_MODEL = 'users.User'
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -123,7 +117,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -136,7 +129,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/

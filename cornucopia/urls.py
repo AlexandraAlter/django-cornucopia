@@ -66,9 +66,10 @@ urlpatterns = [
             path('reports/', views.in_development),
             path('appeals/', views.in_development),
         ])),
-    path('user/<slug:username>/',
-         include([
-             path('', views.in_development),
-             path('report/', views.in_development),
-         ] + _board + _post_virtual)),
+    path(
+        'user/<slug:username>/',
+        include([
+            path('', views.in_development),
+            path('report/', views.in_development),
+        ] + _board + _post_virtual)),
 ] + _board + _post_virtual
