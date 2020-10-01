@@ -2,19 +2,24 @@ from django.contrib import admin
 
 from . import models
 
+admin.site.register(models.boards.Board)
+
 
 @admin.register(models.posts.Post)
 class PostAdmin(admin.ModelAdmin):
     pass
 
+
 admin.site.register(models.posts.Gallery)
 
 admin.site.register(models.reports.Report)
 
+
 @admin.register(models.tags.TagCategory)
 class TagCategoryAdmin(admin.ModelAdmin):
-    list_filter = ('zone',)
+    list_filter = ('zone', )
     pass
+
 
 admin.site.register(models.tags.Tag)
 admin.site.register(models.tags.TagImplication)
