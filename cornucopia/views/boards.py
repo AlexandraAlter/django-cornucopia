@@ -11,6 +11,14 @@ class BoardMixin:
         return board
 
 
+class BoardListView(views.View):
+    pass
+
+
+class NewBoardView(views.View):
+    pass
+
+
 class BoardView(BoardMixin, views.View):
     def get(self, request, *args, **kwargs):
         board = self.get_board()
